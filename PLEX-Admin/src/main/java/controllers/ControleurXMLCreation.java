@@ -3,24 +3,8 @@ package controllers;
 import models.*;
 import views.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.BufferedWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Set;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.dom4j.*;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -40,38 +24,42 @@ public class ControleurXMLCreation {
 
 	public void createXML(){
 		new Thread(){
-				public void run(){
-					mainGUI.setAcknoledgeMessage("Creation XML... WAIT");
-					long currentTime = System.currentTimeMillis();
-					try {
-						globalData = ormAccess.GET_GLOBAL_DATA();
-						mainGUI.setWarningMessage("Creation XML: Fonction non encore implementee");
-					}
-					catch (Exception e){
-						mainGUI.setErrorMessage("Construction XML impossible", e.toString());
-					}
+			public void run(){
+				mainGUI.setAcknoledgeMessage("Creation XML... WAIT");
+				long currentTime = System.currentTimeMillis();
+				try {
+					globalData = ormAccess.GET_GLOBAL_DATA();
+					//mainGUI.setWarningMessage("Creation XML: Fonction non encore implementee");
+
+					XmlCreation xml= new XmlCreation(globalData);
+					xml.create();
+
 				}
+				catch (Exception e){
+					mainGUI.setErrorMessage("Construction XML impossible", e.toString());
+				}
+			}
 		}.start();
 	}
 
 	public void createXStreamXML(){
 		new Thread(){
-				public void run(){
-					mainGUI.setAcknoledgeMessage("Creation XML... WAIT");
-					long currentTime = System.currentTimeMillis();
-					try {
-						globalData = ormAccess.GET_GLOBAL_DATA();
-						globalDataControle();
-					}
-					catch (Exception e){
-						mainGUI.setErrorMessage("Construction XML impossible", e.toString());
-					}
-
-					XStream xstream = new XStream();
-					writeToFile("global_data.xml", xstream, globalData);
-					System.out.println("Done [" + displaySeconds(currentTime, System.currentTimeMillis()) + "]");
-					mainGUI.setAcknoledgeMessage("XML cree en "+ displaySeconds(currentTime, System.currentTimeMillis()) );
+			public void run(){
+				mainGUI.setAcknoledgeMessage("Creation XML... WAIT");
+				long currentTime = System.currentTimeMillis();
+				try {
+					globalData = ormAccess.GET_GLOBAL_DATA();
+					globalDataControle();
 				}
+				catch (Exception e){
+					mainGUI.setErrorMessage("Construction XML impossible", e.toString());
+				}
+
+				XStream xstream = new XStream();
+				writeToFile("global_data.xml", xstream, globalData);
+				System.out.println("Done [" + displaySeconds(currentTime, System.currentTimeMillis()) + "]");
+				mainGUI.setAcknoledgeMessage("XML cree en "+ displaySeconds(currentTime, System.currentTimeMillis()) );
+			}
 		}.start();
 	}
 
@@ -84,7 +72,7 @@ public class ControleurXMLCreation {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static final DecimalFormat doubleFormat = new DecimalFormat("#.#");
 	private static final String displaySeconds(long start, long end) {
 		long diff = Math.abs(end - start);
@@ -121,6 +109,3 @@ public class ControleurXMLCreation {
 		}
 	}
 }
-
-
-

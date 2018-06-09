@@ -15,7 +15,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Map;
 
-public class ControleurGeneral {
+public class  ControleurGeneral {
 
 	private static MainGUI mainGUI;
 	private static ORMAccess ormAccess;
@@ -33,11 +33,11 @@ public class ControleurGeneral {
 		ctrFilms = new ControleurFilms(ormAccess, mainGUI);
 		ctrProjections.refreshProjectionsList();
 		ctrFilms.refreshFilmsList();
+		ctrMedia = new ControleurMedia(this, mainGUI, ormAccess);
 		IServerApi remoteService = (IServerApi) Naming.lookup("//localhost:9999/RmiService");
 		ctrWFC = new ControleurWFC(this,mainGUI, remoteService );
 		ctrWFC.initialConnection();
 		ctrWFC.startCheckingThread();
-		ctrMedia = new ControleurMedia(this, mainGUI, ormAccess);
 		ctrXMLCreation = new ControleurXMLCreation(this, mainGUI, ormAccess);
 	}
 

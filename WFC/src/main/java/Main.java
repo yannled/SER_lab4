@@ -102,7 +102,7 @@ public class Main extends Observable implements IServerApi{
 		@Override
 		public void update(Observable o, Object arg) {
 			try {
-				ro.update(o.toString(), IClientApi.Signal.UPDATE_REQUESTED, arg.toString());
+				ro.update(o.toString(), IClientApi.Signal.UPDATE_REQUESTED, "updateDatabase");
 			} catch (RemoteException e) {
 				System.out.println("Remote exception removing observer: " + this);
 				o.deleteObserver(this);
