@@ -1,0 +1,28 @@
+{
+  "Projections": [
+    {
+      "TitreFilm": "Casino Royale",
+      "DateProjection": "09-45-2018",
+      "Acteurs": {
+        "1er Role": "Craig, Daniel",
+        "2eme Role": "Green, Eva"
+      }
+    },
+    {
+      "TitreFilm": "GoldenEye",
+      "DateProjection": "09-45-2018",
+      "Acteurs": {
+        "1er Role": "Brosnan, Pierce",
+        "2eme Role": "Bean, Sean"
+      }
+    },
+    {
+      "TitreFilm": "Man of Steel",
+      "DateProjection": "09-45-2018",
+      "Acteurs": {
+        "1er Role": "Cavill, Henry",
+        "2eme Role": "Adams, Amy"
+      }
+    }
+  ]
+}
